@@ -3,7 +3,42 @@ import ReactDOM from 'react-dom';
 import { useState, useEffect, useRef } from 'react';
 //import YouTubePlayer from 'youtube-player';
 import './main.css';
-import MyYouTubePlayer from './youtube';
+import Player from '@vimeo/player';
+
+function VimeoPlayer(props){
+  const {id}=props;
+  const VimeoPlayerDivRef= useRef(null)
+
+  useEffect(function(){
+    VimeoPlayerDivRef.current = new Player('handstick', {
+      id: 19231868,
+      width: 640
+  });
+
+  },[]);
+  useEffect(function(){
+
+  },[id]);
+
+
+
+  return (
+    <>
+      <div ref={VimeoPlayerDivRef}> </div>
+    </>
+
+  )
+
+}
+
+
+
+
+
+
+
+
+
 
 const App = () => {
  
@@ -11,7 +46,7 @@ const App = () => {
   return (
     <div>
       <h1>Hello World</h1>
-      <MyYouTubePlayer vId="M7lc1UVf-VE" playMode={playMode}  setplayMode={setplayMode}></MyYouTubePlayer>
+      <VimeoPlayer id={19231868} ></VimeoPlayer>
      
 
     </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { SWRConfig } from 'swr';
 import $ from 'jquery';
 import { useState, useEffect } from 'react';
 
@@ -77,8 +78,13 @@ function StarwarsCharacter(props) {
 
 const App = () => {
   const [id, setId] = useState(1);
-
+  
   return (
+   /* <SWRConfig value={
+      {
+      fetcher: (...args) => fetch(...args).then(res => res.json())
+      }
+    }></SWRConfig>*/
     <div>
       <input type="number" value={id} onChange={(e) => setId(e.target.value)} />
       <StarwarsCharacter id={id} />
