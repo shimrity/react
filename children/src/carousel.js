@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 
-export default function Carousel(props){
+
+export default function MyCarousel(props){
     const [currentImg, setCurrentImg] = useState(0);
-  // console.log(React.Children.count(props.children));
+  //y console.log(React.Children.count(props.children));
     const numberOfImg = React.Children.count(props.children);
 
     function imgComponent(imgIndex) {
@@ -17,6 +18,7 @@ export default function Carousel(props){
 
     return (
         <div className="app">
+            <br/>
           <button
            
             onClick={(e) => setCurrentImg((v) => {
