@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 function setStateToProp(state){
     return {
-        username : state.username,
-        messages: state.messages,
+        username : state.account.username,
+        messages: state.messages.messages,
     }
 }
 export default connect(setStateToProp)(function Header(props){

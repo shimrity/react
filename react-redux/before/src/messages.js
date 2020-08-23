@@ -5,7 +5,7 @@ import {deleteMessage} from './redux/actions';
 function mapStateToProps(state) {
   return {
 
-    messages: state.messages,
+    messages: state.messages.messages,
     
   };
 }

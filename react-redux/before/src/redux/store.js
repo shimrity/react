@@ -1,50 +1,54 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import produce from 'immer';
 
-const initialState = {
-  rooms: [
-    { id: 0, name: 'Loby' },
-    { id: 1, name: 'JavaScript Chats' },
-  ],
-  activeRoomId: 0,
-  messages: [
-    { id: 0, from: 'ynon', text: 'Hello Everyone' },
-  ],
-  username: "guest",
+import rooms from './reducers/rooms';
+import messages from './reducers/messages';
+import account from './reducers/accont';
+import oldstate from './reducers/oldstate';
+import {setUsername} from './actions';
+
+const reduxMiddleware = store => next => action => {
+  // middleware code goes here
+  if(action.type  === 'ACTION'){
+  if(action.meta && action.meta.delay)
+  {
+    
+    setTimeout(function(){
+     
+      store.dispatch({ type: 'SET_USERNAME', payload: 'SYSTEM' })
+     
+      return next(action) }, action.meta.delay);
+  }  
+}
+return next(action) ;
+};
+const reduxMiddlewareSaveOldState = store => next => action => {
+  // middleware code goes here
+  
+  if(action.type  !== 'UNDO' && action.type !=='SAVE_STATE')
+    {
+   
+  store.dispatch({ type: 'SAVE_STATE', payload: action.payload })
+  return next(action);
+  }
+ //else
+ 
+  //store.dispatch({ type: 'UNDO', payload: 'SYSTEM' })
+
+
 
 };
-
-function nextId(items) {
-  return Math.max(...items.map(i => i.id)) + 1;
-}
-
-const reducer = produce((state, action) => {
-  switch(action.type) {
-    case 'SET_USERNAME':
-      state.username = action.payload;
-      break;
-
-    case 'RECEIVED_MESSAGE':     
-      state.messages.push({id: nextId(state.messages),from:action.payload.from, text:action.payload.text});
-      break;
-      case 'DELETE_MESSAGE':     
-      state.messages = state.messages.filter(item => item.id !== action.payload.id)
-      break;
-    case 'CREATE_ROOM':
-      state.rooms.push({ id: nextId(state.rooms), name: action.payload });
-      break;
-
-    case 'SET_ACTIVE_ROOM':
-      state.activeRoomId = action.payload;
-      break;
-
-    case 'RECEIVED_ROOMS':
-      state.rooms = action.payload;
-      break;
+/*function reducer(state, action)  {
+  return {
+    rooms: roomReduser(state.rooms,action),
+    account: accountReduser(state.account,action) ,
+    messages: messagesReduser(state.messages,action),
   }
-}, initialState);
+}*/
 
-const store = createStore(reducer);
+const reducer = combineReducers({rooms,account,messages,oldstate})
+
+const store = createStore(reducer,applyMiddleware(reduxMiddleware,reduxMiddlewareSaveOldState));
 window.store = store;
 export default store;
 

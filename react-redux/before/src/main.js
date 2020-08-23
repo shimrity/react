@@ -10,10 +10,10 @@ import NewMessage from './newMessage';
 
 const App = (props) => (
   <Provider store={store}>
-    <Header  username={store.Username}/>
-  <Username  username={store.Username} messages={store.messages}/>
-  <Messages messages={store.messages}/>
-  <NewMessage  messages={store.messages} username={store.Username} />
+    <Header />
+  <Username/>
+  <Messages/>
+  <NewMessage />
 </Provider>
 );
 

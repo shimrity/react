@@ -8,8 +8,8 @@ import username from './username';
 function mapStateToProps(state) {
     return {
   
-      messages: state.messages,
-      username: state.username,
+      messages: state.messages.messages,
+      username: state.account.username,
       //nextId : state.nextId(),
       
        
